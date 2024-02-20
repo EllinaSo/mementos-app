@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "airbnb",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "react/react-in-jsx-scope": 0,
+        "linebreak-style": 0,
+        "react/function-component-definition": 0,
+        "react/no-array-index-key": 0,
+        "react/prop-types": 0,
+        "default-param-last": 0,
+        "import/prefer-default-export": 1,
+        "no-underscore-dangle": 0
+    }
+}
