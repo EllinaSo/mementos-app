@@ -90,7 +90,7 @@ const Form = () => {
   };
 
   return (
-    <Card>
+    <Card sx={{ position: 'sticky', top: 16 }}>
       <Box sx={{ p: 2 }} as="form" onSubmit={submitHandle}>
         <Typography component="div" variant="h6">
           {currentPost ? 'Edit' : 'Create'}

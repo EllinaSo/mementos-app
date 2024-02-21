@@ -26,7 +26,7 @@ const Posts = () => {
   return (
     <>
       <Grid container spacing={2}>
-        {loading
+        {(loading && !posts.length)
           ? SKELETONS.map((skeleton) => (
             <Grid item xs={12} sm={6} key={skeleton}>
               <Skeleton />
