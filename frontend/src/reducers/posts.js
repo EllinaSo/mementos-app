@@ -17,7 +17,7 @@ export default (store = STORE, action) => {
     case ERROR_ALL:
       return { ...store, loading: false, error: action.payload };
     case ADD_POST:
-      return { ...store, list: [...store.list, action.payload] };
+      return { ...store, list: [action.payload, ...store.list] };
     case REMOVE_POST:
       return { ...store, list: store.list.filter(({ _id: id }) => id !== action.payload) };
     case EDIT_POST:
