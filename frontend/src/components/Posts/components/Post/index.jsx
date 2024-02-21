@@ -42,7 +42,7 @@ const Post = ({
       {selectedFile && (
         <CardMedia
           component="img"
-          height="194"
+          height="190"
           image={selectedFile}
           alt={`${title} photo`}
         />
