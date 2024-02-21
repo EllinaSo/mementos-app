@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {
   setCurrentPost, deletePost, setDeleteError, setLikeError, likePost,
@@ -14,7 +16,11 @@ import Skeleton from './components/Skeleton';
 const SKELETONS = [...Array(4).keys()];
 
 const Posts = () => {
+  const theme = useTheme();
+  const isMobileSize = useMediaQuery(theme.breakpoints.down('md'));
+
   const dispatch = useDispatch();
+
   const {
     list: posts, loading, error,
   } = useSelector((store) => store.posts);
@@ -36,7 +42,12 @@ const Posts = () => {
             <Grid item xs={12} sm={6} key={post._id}>
               <Post
                 data={post}
-                onEdit={() => dispatch(setCurrentPost(post._id))}
+                onEdit={() => {
+                  if (isMobileSize) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                  dispatch(setCurrentPost(post._id));
+                }}
                 onDelete={() => dispatch(deletePost(post._id))}
                 onLike={() => dispatch(likePost(post._id))}
               />
