@@ -19,3 +19,8 @@ export const updatePost = (id, updatedPost) => axios({
   url: `posts/${id}`,
   data: updatedPost,
 });
+
+export const deletePost = (id) => axios({
+  method: 'DELETE',
+  url: `posts/${id}`,
+});

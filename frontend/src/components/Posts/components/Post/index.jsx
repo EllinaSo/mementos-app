@@ -18,6 +18,7 @@ const Post = ({
     title, tags, message, creator, selectedFile, likeCount, createdAt,
   },
   onEdit,
+  onDelete,
 }) => (
   <Card sx={{ height: '100%' }}>
     <Stack sx={{ height: '100%' }}>
@@ -69,7 +70,7 @@ const Post = ({
           </IconButton>
           <Typography color="text.secondary">{likeCount}</Typography>
         </Stack>
-        <IconButton aria-label="Delete">
+        <IconButton aria-label="Delete" onClick={onDelete}>
           <DeleteIcon />
         </IconButton>
       </CardActions>

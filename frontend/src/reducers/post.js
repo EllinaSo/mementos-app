@@ -1,11 +1,12 @@
 import {
-  CREATE_POST, UPDATE_POST, SET_CURRENT_POST, LOADING_POST, ERROR_POST,
+  CREATE_POST, UPDATE_POST, SET_CURRENT_POST, LOADING_POST, ERROR_POST, SET_DELETE_ERROR,
 } from '../constants/post';
 
 const STORE = {
   currentPost: null,
   loading: false,
   error: null,
+  deleteError: null,
 };
 
 export default (store = STORE, action) => {
@@ -19,6 +20,8 @@ export default (store = STORE, action) => {
     case CREATE_POST:
     case UPDATE_POST:
       return { ...store, currentPost: null, loading: false };
+    case SET_DELETE_ERROR:
+      return { ...store, deleteError: action.payload };
     default:
       return store;
   }

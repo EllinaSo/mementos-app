@@ -1,6 +1,6 @@
 import * as api from '../api';
 import {
-  CREATE_POST, UPDATE_POST, SET_CURRENT_POST, LOADING_POST, ERROR_POST,
+  CREATE_POST, UPDATE_POST, SET_CURRENT_POST, LOADING_POST, ERROR_POST, SET_DELETE_ERROR,
 } from '../constants/post';
 import { getPosts } from './posts';
 
@@ -30,5 +30,23 @@ export const updatePost = (post) => async (dispatch) => {
     dispatch(getPosts());
   } catch ({ message }) {
     dispatch({ type: ERROR_POST, payload: message });
+  }
+};
+
+export const setDeleteError = (message) => ({
+  type: SET_DELETE_ERROR, payload: message,
+});
+
+export const deletePost = (postId) => async (dispatch, getState) => {
+  try {
+    await api.deletePost(postId);
+
+    if (getState().post.currentPost._id === postId) {
+      dispatch(setCurrentPost(null));
+    }
+
+    dispatch(getPosts());
+  } catch ({ message }) {
+    dispatch(setDeleteError(message));
   }
 };
