@@ -13,3 +13,9 @@ export const createPost = (newPost) => axios({
   url: 'posts',
   data: newPost,
 });
+
+export const updatePost = (id, updatedPost) => axios({
+  method: 'PATCH',
+  url: `posts/${id}`,
+  data: updatedPost,
+});

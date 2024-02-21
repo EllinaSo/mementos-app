@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DoneIcon from '@mui/icons-material/Done';
 
-import { createPost } from '../../actions/posts';
+import { createPost, updatePost } from '../../actions/posts';
 
 import { VisuallyHiddenInput } from './styles';
 
@@ -22,27 +22,43 @@ const STATE = {
   selectedFile: '',
 };
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const fileInputRef = useRef();
   const dispatch = useDispatch();
+  const post = useSelector(
+    ({ posts }) => (currentId ? posts.find((storePost) => storePost._id === currentId) : null),
+  );
 
   const [postData, setPostData] = useState(STATE);
   const {
     creator, title, message, tags, selectedFile,
   } = postData;
 
-  const submitHandle = (e) => {
+  useEffect(() => {
+    if (post) {
+      fileInputRef.current.value = '';
+      setPostData({ ...STATE, ...post });
+    }
+  }, [post]);
+
+  const clear = () => {
+    fileInputRef.current.value = '';
+    setPostData(STATE);
+    setCurrentId(null);
+  };
+
+  const submitHandle = async (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      await dispatch(updatePost(currentId, postData));
+    } else {
+      await dispatch(createPost(postData));
+    }
+    clear();
   };
 
   const changeHandle = ({ target: { name, value } }) => {
     setPostData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const clearHandle = () => {
-    fileInputRef.current.value = '';
-    setPostData(STATE);
   };
 
   const getBase64 = (file) => new Promise((resolve) => {
@@ -79,7 +95,9 @@ const Form = () => {
     <Card>
       <Box sx={{ p: 2 }} as="form" onSubmit={submitHandle}>
         <Typography component="div" variant="h6">
-          Create a Memento
+          {currentId ? 'Edit' : 'Create'}
+          {' '}
+          a Memento
         </Typography>
 
         <Box sx={{ py: 2 }}>
@@ -117,7 +135,7 @@ const Form = () => {
 
         <Stack spacing={2} direction="row">
           <Button variant="contained" fullWidth type="submit" onClick={submitHandle}>Submit</Button>
-          <Button variant="outlined" fullWidth onClick={clearHandle}>Clear</Button>
+          <Button variant="outlined" fullWidth onClick={clear}>Clear</Button>
         </Stack>
       </Box>
     </Card>

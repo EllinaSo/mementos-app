@@ -1,27 +1,20 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
-
-import { getPosts } from '../../actions/posts';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Post from './components/Post';
 
-const Posts = () => {
+const Posts = ({ setCurrentId }) => {
   const posts = useSelector((store) => store.posts);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getPosts());
-  }, []);
 
   return (
     <Grid container spacing={2}>
-
-      {posts.map((post) => (
+      {posts.length ? posts.map((post) => (
         <Grid item xs={12} sm={6} key={post._id}>
-          <Post data={post} />
+          <Post data={post} onEdit={() => setCurrentId(post._id)} />
         </Grid>
-      ))}
+      )) : <CircularProgress />}
     </Grid>
   );
 };

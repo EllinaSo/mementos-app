@@ -11,20 +11,21 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Post = ({
   data: {
-    title = 'Some random memento', tags, message, creator, selectedFile, likeCount, createdAt,
+    title, tags, message, creator, selectedFile, likeCount, createdAt,
   },
+  onEdit,
 }) => (
   <Card sx={{ height: '100%' }}>
     <Stack sx={{ height: '100%' }}>
       <CardHeader
         disableTypography
         action={(
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+          <IconButton aria-label="Edit" onClick={onEdit}>
+            <EditIcon />
           </IconButton>
         )}
         title={<Typography variant="body1" sx={{ fontWeight: 'bold' }}>{title}</Typography>}
@@ -55,7 +56,7 @@ const Post = ({
 
           {tags && (
             <Stack direction="row" flexWrap="wrap" gap={1}>
-              {tags.split(', ').map((tag, index) => <Chip key={index} variant="outlined" color="success" size="small" label={tag} />)}
+              {tags.split(', ').map((tag, index) => (tag ? <Chip key={index} variant="outlined" color="success" size="small" label={tag} /> : null))}
             </Stack>
           )}
         </CardContent>

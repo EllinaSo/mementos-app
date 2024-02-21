@@ -1,10 +1,11 @@
 import express from 'express';
 
-import { getPosts, createPost } from '../controllers/posts.js'
+import { getPosts, createPost, updatePost } from '../controllers/posts.js'
 
 const routes = express.Router();
 
 routes.get('/', getPosts)
-    .post('/', createPost);
+routes.post('/', createPost);
+routes.patch('/:id', updatePost);
 
 export default routes;
