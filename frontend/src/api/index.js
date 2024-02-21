@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:5000';
+const URL = 'https://mementos-app-production.up.railway.app/';
 axios.defaults.baseURL = URL;
 
 export const fetchPosts = () => axios({
