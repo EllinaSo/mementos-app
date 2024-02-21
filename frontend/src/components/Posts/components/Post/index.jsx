@@ -19,6 +19,7 @@ const Post = ({
   },
   onEdit,
   onDelete,
+  onLike,
 }) => (
   <Card sx={{ height: '100%' }}>
     <Stack sx={{ height: '100%' }}>
@@ -67,7 +68,7 @@ const Post = ({
 
       <CardActions disableSpacing sx={{ justifyContent: 'space-between', marginTop: 'auto' }}>
         <Stack direction="row" alignItems="center">
-          <IconButton aria-label="Like it">
+          <IconButton aria-label="Like it" onClick={onLike}>
             <FavoriteIcon />
           </IconButton>
           <Typography color="text.secondary">{likeCount}</Typography>

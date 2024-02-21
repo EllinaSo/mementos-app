@@ -1,6 +1,12 @@
 import * as api from '../api';
 import {
-  CREATE_POST, UPDATE_POST, SET_CURRENT_POST, LOADING_POST, ERROR_POST, SET_DELETE_ERROR,
+  CREATE_POST,
+  UPDATE_POST,
+  SET_CURRENT_POST,
+  LOADING_POST,
+  ERROR_POST,
+  SET_DELETE_ERROR,
+  SET_LIKE_ERROR,
 } from '../constants/post';
 import { getPosts } from './posts';
 
@@ -51,5 +57,19 @@ export const deletePost = (postId) => async (dispatch, getState) => {
     dispatch(getPosts());
   } catch ({ message }) {
     dispatch(setDeleteError(message));
+  }
+};
+
+export const setLikeError = (message) => ({
+  type: SET_LIKE_ERROR, payload: message,
+});
+
+export const likePost = (postId) => async (dispatch) => {
+  console.log('first');
+  try {
+    await api.likePost(postId);
+    dispatch(getPosts());
+  } catch ({ message }) {
+    dispatch(setLikeError(message));
   }
 };

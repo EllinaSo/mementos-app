@@ -4,7 +4,9 @@ import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-import { setCurrentPost, deletePost, setDeleteError } from '../../actions/post';
+import {
+  setCurrentPost, deletePost, setDeleteError, setLikeError, likePost,
+} from '../../actions/post';
 
 import Post from './components/Post';
 import Skeleton from './components/Skeleton';
@@ -16,7 +18,7 @@ const Posts = () => {
   const {
     list: posts, loading, error,
   } = useSelector((store) => store.posts);
-  const { deleteError } = useSelector((store) => store.post);
+  const { deleteError, likeError } = useSelector((store) => store.post);
 
   if (error) {
     return <Alert severity="error">{error}</Alert>;
@@ -36,17 +38,21 @@ const Posts = () => {
                 data={post}
                 onEdit={() => dispatch(setCurrentPost(post._id))}
                 onDelete={() => dispatch(deletePost(post._id))}
+                onLike={() => dispatch(likePost(post._id))}
               />
             </Grid>
           ))}
       </Grid>
 
       <Snackbar
-        open={!!deleteError}
-        onClose={() => dispatch(setDeleteError(null))}
+        open={!!(deleteError || likeError)}
+        onClose={() => {
+          dispatch(setDeleteError(null));
+          dispatch(setLikeError(null));
+        }}
       >
         <Alert severity="error">
-          {deleteError}
+          {deleteError || likeError}
         </Alert>
       </Snackbar>
     </>

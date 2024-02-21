@@ -4,3 +4,4 @@ export const SET_CURRENT_POST = 'SET_CURRENT_POST';
 export const LOADING_POST = 'LOADING_POST';
 export const ERROR_POST = 'ERROR_POST';
 export const SET_DELETE_ERROR = 'SET_DELETE_ERROR';
+export const SET_LIKE_ERROR = 'SET_LIKE_ERROR';
