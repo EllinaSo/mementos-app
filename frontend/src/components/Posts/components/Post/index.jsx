@@ -57,7 +57,9 @@ const Post = ({
 
           {tags && (
             <Stack direction="row" flexWrap="wrap" gap={1}>
-              {tags.split(', ').map((tag, index) => (tag ? <Chip key={index} variant="outlined" color="success" size="small" label={tag} /> : null))}
+              {tags.split(' #').map(
+                (tag, index) => (tag ? <Chip key={index} variant="outlined" color="success" size="small" label={`${index ? '#' : ''}${tag}`} /> : null),
+              )}
             </Stack>
           )}
         </CardContent>

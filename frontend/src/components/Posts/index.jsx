@@ -42,7 +42,7 @@ const Posts = () => {
       </Grid>
 
       <Snackbar
-        open={Boolean(deleteError)}
+        open={!!deleteError}
         onClose={() => dispatch(setDeleteError(null))}
       >
         <Alert severity="error">

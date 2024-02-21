@@ -34,8 +34,10 @@ const Form = () => {
   } = postData;
 
   useEffect(() => {
-    fileInputRef.current.value = '';
-    setPostData({ ...STATE, ...currentPost });
+    if (currentPost) {
+      fileInputRef.current.value = '';
+      setPostData({ ...STATE, ...currentPost });
+    }
   }, [currentPost]);
 
   const clear = () => {
@@ -47,9 +49,9 @@ const Form = () => {
   const submitHandle = async (e) => {
     e.preventDefault();
     if (currentPost) {
-      dispatch(updatePost(postData));
+      dispatch(updatePost(postData)).then(() => clear()).catch(() => {});
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost(postData)).then(() => clear()).catch(() => {});
     }
   };
 
@@ -109,7 +111,7 @@ const Form = () => {
               <TextField fullWidth name="message" label="Message" variant="outlined" size="small" multiline rows={2} value={message} onChange={changeHandle} />
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <TextField fullWidth name="tags" label="Tags" variant="outlined" size="small" multiline rows={2} value={tags} onChange={changeHandle} placeholder="tag1, tag2, tag3, ... " />
+              <TextField fullWidth name="tags" label="Tags" variant="outlined" size="small" multiline rows={2} value={tags} onChange={changeHandle} placeholder="#tag1 #tag2 #tag3 ... " />
             </Grid>
             <Grid item xs={12}>
               <Stack alignItems="center" direction="row" spacing={2} flexWrap="wrap">

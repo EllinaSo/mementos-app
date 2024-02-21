@@ -16,8 +16,10 @@ export const createPost = (post) => async (dispatch) => {
     await api.createPost(post);
     dispatch({ type: CREATE_POST });
     dispatch(getPosts());
+    return Promise.resolve();
   } catch ({ message }) {
     dispatch({ type: ERROR_POST, payload: message });
+    return Promise.reject();
   }
 };
 
@@ -28,8 +30,10 @@ export const updatePost = (post) => async (dispatch) => {
     await api.updatePost(post._id, post);
     dispatch({ type: UPDATE_POST });
     dispatch(getPosts());
+    return Promise.resolve();
   } catch ({ message }) {
     dispatch({ type: ERROR_POST, payload: message });
+    return Promise.reject();
   }
 };
 
@@ -40,8 +44,7 @@ export const setDeleteError = (message) => ({
 export const deletePost = (postId) => async (dispatch, getState) => {
   try {
     await api.deletePost(postId);
-
-    if (getState().post.currentPost._id === postId) {
+    if (getState().post.currentPost?._id === postId) {
       dispatch(setCurrentPost(null));
     }
 
