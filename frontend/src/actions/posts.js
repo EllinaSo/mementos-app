@@ -1,28 +1,14 @@
 import * as api from '../api';
+import {
+  FETCH_ALL, LOADING_ALL, ERROR_ALL,
+} from '../constants/posts';
 
 export const getPosts = () => async (dispatch) => {
+  dispatch({ type: LOADING_ALL });
   try {
     const { data } = await api.fetchPosts();
-    dispatch({ type: 'FETCH_ALL', payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const createPost = (post) => async (dispatch) => {
-  try {
-    const { data } = await api.createPost(post);
-    dispatch({ type: 'CREATE_POST', payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const updatePost = (id, post) => async (dispatch) => {
-  try {
-    const { data } = await api.updatePost(id, post);
-    dispatch({ type: 'UPDATE_POST', payload: data });
-  } catch (error) {
-    console.log(error);
+    dispatch({ type: FETCH_ALL, payload: data });
+  } catch ({ message }) {
+    dispatch({ type: ERROR_ALL, payload: message });
   }
 };

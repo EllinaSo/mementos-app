@@ -7,10 +7,11 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DoneIcon from '@mui/icons-material/Done';
 
-import { createPost, updatePost } from '../../actions/posts';
+import { createPost, updatePost, setCurrentPost } from '../../actions/post';
 
 import { VisuallyHiddenInput } from './styles';
 
@@ -22,12 +23,10 @@ const STATE = {
   selectedFile: '',
 };
 
-const Form = ({ currentId, setCurrentId }) => {
+const Form = () => {
   const fileInputRef = useRef();
   const dispatch = useDispatch();
-  const post = useSelector(
-    ({ posts }) => (currentId ? posts.find((storePost) => storePost._id === currentId) : null),
-  );
+  const { currentPost, loading, error } = useSelector((store) => store.post);
 
   const [postData, setPostData] = useState(STATE);
   const {
@@ -35,26 +34,23 @@ const Form = ({ currentId, setCurrentId }) => {
   } = postData;
 
   useEffect(() => {
-    if (post) {
-      fileInputRef.current.value = '';
-      setPostData({ ...STATE, ...post });
-    }
-  }, [post]);
+    fileInputRef.current.value = '';
+    setPostData({ ...STATE, ...currentPost });
+  }, [currentPost]);
 
   const clear = () => {
     fileInputRef.current.value = '';
     setPostData(STATE);
-    setCurrentId(null);
+    dispatch(setCurrentPost(null));
   };
 
   const submitHandle = async (e) => {
     e.preventDefault();
-    if (currentId) {
-      await dispatch(updatePost(currentId, postData));
+    if (currentPost) {
+      dispatch(updatePost(postData));
     } else {
-      await dispatch(createPost(postData));
+      dispatch(createPost(postData));
     }
-    clear();
   };
 
   const changeHandle = ({ target: { name, value } }) => {
@@ -95,7 +91,7 @@ const Form = ({ currentId, setCurrentId }) => {
     <Card>
       <Box sx={{ p: 2 }} as="form" onSubmit={submitHandle}>
         <Typography component="div" variant="h6">
-          {currentId ? 'Edit' : 'Create'}
+          {currentPost ? 'Edit' : 'Create'}
           {' '}
           a Memento
         </Typography>
@@ -130,12 +126,17 @@ const Form = ({ currentId, setCurrentId }) => {
                 </Button>
               </Stack>
             </Grid>
+            {error && (
+            <Grid item xs={12}>
+              <Typography color="error" variant="body2">{error}</Typography>
+            </Grid>
+            )}
           </Grid>
         </Box>
 
         <Stack spacing={2} direction="row">
-          <Button variant="contained" fullWidth type="submit" onClick={submitHandle}>Submit</Button>
-          <Button variant="outlined" fullWidth onClick={clear}>Clear</Button>
+          <Button variant="contained" fullWidth type="submit" onClick={submitHandle} endIcon={loading ? <CircularProgress color="inherit" size={14} /> : null} disabled={loading}>Submit</Button>
+          <Button variant="outlined" fullWidth onClick={clear} disabled={loading}>Clear</Button>
         </Stack>
       </Box>
     </Card>

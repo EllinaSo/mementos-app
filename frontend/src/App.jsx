@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -10,14 +10,11 @@ import Form from './components/Form';
 import Posts from './components/Posts';
 
 const App = () => {
-  const [currentId, setCurrentId] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!currentId) {
-      dispatch(getPosts());
-    }
-  }, [currentId]);
+    dispatch(getPosts());
+  }, []);
 
   return (
     <>
@@ -27,10 +24,10 @@ const App = () => {
         <Box sx={{ py: 4 }}>
           <Grid container spacing={2} direction={{ xs: 'column-reverse', md: 'row' }}>
             <Grid item xs={12} md={8} lg={9}>
-              <Posts setCurrentId={setCurrentId} />
+              <Posts />
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
+              <Form />
             </Grid>
           </Grid>
         </Box>
