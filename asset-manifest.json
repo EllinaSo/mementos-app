@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/mementos-app/static/css/main.6237f8b5.css",
-    "main.js": "/mementos-app/static/js/main.f97ed531.js",
+    "main.js": "/mementos-app/static/js/main.3e8908c2.js",
     "index.html": "/mementos-app/index.html",
     "main.6237f8b5.css.map": "/mementos-app/static/css/main.6237f8b5.css.map",
-    "main.f97ed531.js.map": "/mementos-app/static/js/main.f97ed531.js.map"
+    "main.3e8908c2.js.map": "/mementos-app/static/js/main.3e8908c2.js.map"
   },
   "entrypoints": [
     "static/css/main.6237f8b5.css",
-    "static/js/main.f97ed531.js"
+    "static/js/main.3e8908c2.js"
   ]
 }
