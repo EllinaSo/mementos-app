@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Layout from './components/Layout';
 import Home from './components/Home';
+import Auth from './components/Auth';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: 'auth',
+        Component: Auth,
       },
     ],
   },
@@ -32,6 +37,10 @@ const theme = createTheme({
   },
 });
 
-const App = () => <ThemeProvider theme={theme}><RouterProvider router={router} /></ThemeProvider>;
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <RouterProvider router={router} />
+  </ThemeProvider>
+);
 
 export default App;

@@ -2,13 +2,13 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {
   setCurrentPost, deletePost, setDeleteError, setLikeError, likePost,
 } from '../../actions/post';
+import Snackbar from '../Snackbar';
 
 import Post from './components/Post';
 import Skeleton from './components/Skeleton';
@@ -61,11 +61,9 @@ const Posts = () => {
           dispatch(setDeleteError(null));
           dispatch(setLikeError(null));
         }}
-      >
-        <Alert severity="error">
-          {deleteError || likeError}
-        </Alert>
-      </Snackbar>
+        message={deleteError || likeError}
+
+      />
     </>
   );
 };

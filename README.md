@@ -27,7 +27,8 @@ Clone the repository, it contains both frontend and backend code.
 ##### Frontend
 
 1. In terminal move to `frontend` folder and install dependencies with `pnpm i` command.
-2. Start server with `pnpm start` command. It will open page [http://localhost:3000](http://localhost:3000) automatically.
+2. Create a `.env` file in the directory and fill it according to the `.env.example` file. You might need to create a project on the [Google APIs console](https://console.cloud.google.com/welcome?authuser=1) to get `REACT_APP_CLIENT_ID`
+3. Start server with `pnpm start` command. It will open page [http://localhost:3000](http://localhost:3000) automatically.
 
 ##### Backend
 
