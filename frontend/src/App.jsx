@@ -2,6 +2,7 @@ import React from 'react';
 import {
   RouterProvider,
   createBrowserRouter,
+  redirect,
 } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         Component: Auth,
+        loader: () => (JSON.parse(localStorage.getItem('profile')) ? redirect('/') : null),
       },
     ],
   },

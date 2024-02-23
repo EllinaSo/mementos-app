@@ -1,31 +1,32 @@
 import axios from 'axios';
 
-const URL = process.env.NODE_ENV === 'production' ? 'https://mementos-app-production.up.railway.app/' : 'http://localhost:5000';
-axios.defaults.baseURL = URL;
+const instance = axios.create({
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://mementos-app-production.up.railway.app/' : 'http://localhost:5000',
+});
 
-export const fetchPosts = () => axios({
+export const fetchPosts = () => instance({
   method: 'GET',
   url: 'posts',
 });
 
-export const createPost = (newPost) => axios({
+export const createPost = (newPost) => instance({
   method: 'POST',
   url: 'posts',
   data: newPost,
 });
 
-export const updatePost = (id, updatedPost) => axios({
+export const updatePost = (id, updatedPost) => instance({
   method: 'PATCH',
   url: `posts/${id}`,
   data: updatedPost,
 });
 
-export const likePost = (id) => axios({
+export const likePost = (id) => instance({
   method: 'PATCH',
   url: `posts/${id}/like`,
 });
 
-export const deletePost = (id) => axios({
+export const deletePost = (id) => instance({
   method: 'DELETE',
   url: `posts/${id}`,
 });
