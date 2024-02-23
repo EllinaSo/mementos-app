@@ -7,8 +7,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {
   setCurrentPost, deletePost, setDeleteError, setLikeError, likePost,
-} from '../../actions/post';
-import Snackbar from '../Snackbar';
+} from '../../../../actions/post';
+import Snackbar from '../../../../components/Snackbar';
 
 import Post from './components/Post';
 import Skeleton from './components/Skeleton';

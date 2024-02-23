@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import Grid from '@mui/material/Grid';
 
 import { getPosts } from '../../actions/posts';
-import Form from '../Form';
-import Posts from '../Posts';
+import Form from './components/Form';
+import Posts from './components/Posts';
 
 const Home = () => {
   const dispatch = useDispatch();

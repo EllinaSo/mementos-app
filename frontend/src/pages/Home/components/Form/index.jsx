@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DoneIcon from '@mui/icons-material/Done';
 
-import { createPost, updatePost, setCurrentPost } from '../../actions/post';
+import { createPost, updatePost, setCurrentPost } from '../../../../actions/post';
 
 import { VisuallyHiddenInput } from './styles';
 
@@ -49,9 +49,9 @@ const Form = () => {
   const submitHandle = async (e) => {
     e.preventDefault();
     if (currentPost) {
-      dispatch(updatePost(postData)).then(() => clear()).catch(() => {});
+      dispatch(updatePost(postData, () => clear()));
     } else {
-      dispatch(createPost(postData)).then(() => clear()).catch(() => {});
+      dispatch(createPost(postData, () => clear()));
     }
   };
 
@@ -78,12 +78,8 @@ const Form = () => {
     const file = target.files[0];
     if (file.type.startsWith('image/')) {
       getBase64(file)
-        .then((base64) => {
-          setPostData((prev) => ({ ...prev, selectedFile: base64 }));
-        })
-        .catch(() => {
-          resetInputFile();
-        });
+        .then((base64) => setPostData((prev) => ({ ...prev, selectedFile: base64 })))
+        .catch(() => resetInputFile());
     } else {
       resetInputFile();
     }

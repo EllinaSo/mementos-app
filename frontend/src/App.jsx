@@ -7,8 +7,8 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Layout from './components/Layout';
-import Home from './components/Home';
-import Auth from './components/Auth';
+import Home from './pages/Home';
+import Auth from './pages/Auth';
 
 const router = createBrowserRouter([
   {

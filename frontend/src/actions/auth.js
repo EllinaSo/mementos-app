@@ -7,7 +7,7 @@ export const setError = (message) => ({
   type: ERROR_GOOGLE_AUTH, payload: message,
 });
 
-export const loginGoogle = (token) => async (dispatch) => {
+export const loginGoogle = (token, callback) => async (dispatch) => {
   dispatch({ type: LOADING_GOOGLE_AUTH });
 
   try {
@@ -17,10 +17,9 @@ export const loginGoogle = (token) => async (dispatch) => {
     localStorage.setItem('token', token);
     dispatch({ type: GOOGLE_AUTH, payload: { profile: data, token } });
 
-    return Promise.resolve();
+    callback();
   } catch ({ message }) {
     dispatch(setError(message));
-    return Promise.reject();
   }
 };
 

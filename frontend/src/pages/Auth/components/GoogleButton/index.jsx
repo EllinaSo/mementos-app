@@ -8,7 +8,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { loginGoogle, setError } from '../../../../actions/auth';
-import Snackbar from '../../../Snackbar';
+import Snackbar from '../../../../components/Snackbar';
 
 const GoogleButton = ({ formType }) => {
   const navigate = useNavigate();
@@ -17,10 +17,7 @@ const GoogleButton = ({ formType }) => {
   const [initialError, setInitialError] = useState(null);
 
   const login = useGoogleLogin({
-    onSuccess: ({ access_token: token }) => {
-      dispatch(loginGoogle(token))
-        .then(() => navigate('/', { replace: true })).catch(() => {});
-    },
+    onSuccess: ({ access_token: token }) => dispatch(loginGoogle(token, () => navigate('/', { replace: true }))),
     onError: () => setInitialError(`Google ${formType} was unsuccessful! Please try again later.`),
   });
 

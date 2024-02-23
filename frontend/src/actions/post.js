@@ -17,7 +17,7 @@ export const setCurrentPost = (postId) => async (dispatch, getState) => dispatch
   payload: postId ? getState().posts.list.find((post) => post._id === postId) || null : null,
 });
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, callback) => async (dispatch) => {
   dispatch({ type: LOADING_POST });
 
   try {
@@ -27,14 +27,13 @@ export const createPost = (post) => async (dispatch) => {
     dispatch(addPost(data));
     dispatch(getPosts());
 
-    return Promise.resolve();
+    callback();
   } catch ({ message }) {
     dispatch({ type: ERROR_POST, payload: message });
-    return Promise.reject();
   }
 };
 
-export const updatePost = (post) => async (dispatch) => {
+export const updatePost = (post, callback) => async (dispatch) => {
   dispatch({ type: LOADING_POST });
 
   try {
@@ -44,10 +43,9 @@ export const updatePost = (post) => async (dispatch) => {
     dispatch(editPost(data));
     dispatch(getPosts());
 
-    return Promise.resolve();
+    callback();
   } catch ({ message }) {
     dispatch({ type: ERROR_POST, payload: message });
-    return Promise.reject();
   }
 };
 
