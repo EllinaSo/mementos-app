@@ -99,19 +99,18 @@ const Form = () => {
         </Typography>
 
         <Box sx={{ py: 2 }}>
-
           <Grid container spacing={2} fullWidth>
             <Grid item xs={12} sm={6} md={12}>
-              <TextField fullWidth name="creator" label="Creator" variant="outlined" size="small" value={creator} onChange={changeHandle} />
+              <TextField name="creator" label="Creator" value={creator} onChange={changeHandle} />
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <TextField fullWidth name="title" label="Title" variant="outlined" size="small" value={title} onChange={changeHandle} />
+              <TextField name="title" label="Title" value={title} onChange={changeHandle} />
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <TextField fullWidth name="message" label="Message" variant="outlined" size="small" multiline rows={2} value={message} onChange={changeHandle} />
+              <TextField name="message" label="Message" multiline rows={2} value={message} onChange={changeHandle} />
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
-              <TextField fullWidth name="tags" label="Tags" variant="outlined" size="small" multiline rows={2} value={tags} onChange={changeHandle} placeholder="#tag1 #tag2 #tag3 ... " />
+              <TextField name="tags" label="Tags" multiline rows={2} value={tags} onChange={changeHandle} placeholder="#tag1 #tag2 #tag3 ... " />
             </Grid>
             <Grid item xs={12}>
               <Stack alignItems="center" direction="row" spacing={2} flexWrap="wrap">
