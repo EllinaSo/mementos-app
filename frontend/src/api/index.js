@@ -30,3 +30,15 @@ export const deletePost = (id) => instance({
   method: 'DELETE',
   url: `posts/${id}`,
 });
+
+export const signIn = (userData) => instance({
+  method: 'POST',
+  url: 'user/sign-in',
+  data: userData,
+});
+
+export const signUp = (userData) => instance({
+  method: 'POST',
+  url: 'user/sign-up',
+  data: userData,
+});

@@ -10,7 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { loginGoogle, setError } from '../../../../actions/auth';
 import Snackbar from '../../../../components/Snackbar';
 
-const GoogleButton = ({ formType }) => {
+const GoogleButton = ({ formType, disabled }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((store) => store.auth);
@@ -27,6 +27,7 @@ const GoogleButton = ({ formType }) => {
       <Button
         variant="outlined"
         fullWidth
+        disabled={disabled}
         startIcon={<GoogleIcon />}
         onClick={() => login()}
         endIcon={loading ? <CircularProgress color="inherit" size={14} /> : null}

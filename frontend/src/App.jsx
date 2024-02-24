@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Auth from './pages/Auth';
+import { getUserFromLocalStorage } from './utils/auth';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         Component: Auth,
-        loader: () => (JSON.parse(localStorage.getItem('profile')) ? redirect('/') : null),
+        loader: () => (getUserFromLocalStorage.profile ? redirect('/') : null),
       },
     ],
   },

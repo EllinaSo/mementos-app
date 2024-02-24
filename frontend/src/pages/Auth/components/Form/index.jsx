@@ -1,5 +1,6 @@
 import React, { useState, useReducer } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
@@ -10,46 +11,55 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { signIn, signUp, setErrorAuth } from '../../../../actions/auth';
+import Snackbar from '../../../../components/Snackbar';
+
 import PasswordField from '../PasswordField';
 import GoogleButton from '../GoogleButton';
 
 const STATE = {
-  password: null,
-  email: null,
-  firstName: null,
-  lastName: null,
-  repeatPassword: null,
+  password: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  repeatPassword: '',
 };
 
 const Form = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignUp, toggleIsSignIn] = useReducer((prev) => !prev, false);
-  const { loading, error } = useSelector((store) => store.post);
+  const { loadingAuth, errorAuth } = useSelector((store) => store.auth);
 
-  const [postData, setPostData] = useState(STATE);
+  const [userData, setUserData] = useState(STATE);
   const {
     password, email, firstName, lastName, repeatPassword,
-  } = postData;
+  } = userData;
 
   const submitHandle = async (e) => {
     e.preventDefault();
+    if (isSignUp) {
+      dispatch(signUp(userData, () => navigate('/')));
+    } else {
+      dispatch(signIn({ email, password }, () => navigate('/')));
+    }
   };
 
   const changeHandle = ({ target: { name, value } }) => {
-    setPostData((prev) => ({ ...prev, [name]: value }));
+    setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
   const formType = isSignUp ? 'sign up' : 'sign in';
 
   return (
     <Card>
-      <Box sx={{ p: 2 }} as="form" onSubmit={submitHandle}>
+      <Box sx={{ p: 2 }} as="form" xs={{ novalidate: true }} onSubmit={submitHandle}>
         <Typography component="div" variant="h6" textTransform="capitalize">
           {formType}
         </Typography>
 
         <Box sx={{ py: 2 }}>
           <Grid container spacing={2} fullWidth>
-
             {isSignUp && (
               <>
                 <Grid item xs={12} sm={6}>
@@ -106,12 +116,6 @@ const Form = () => {
                 />
               </Grid>
             )}
-
-            {error && (
-              <Grid item xs={12}>
-                <Typography color="error" variant="body2">{error}</Typography>
-              </Grid>
-            )}
           </Grid>
         </Box>
 
@@ -121,12 +125,12 @@ const Form = () => {
             fullWidth
             type="submit"
             onClick={submitHandle}
-            endIcon={loading ? <CircularProgress color="inherit" size={14} /> : null}
-            disabled={loading}
+            endIcon={loadingAuth ? <CircularProgress color="inherit" size={14} /> : null}
+            disabled={loadingAuth}
           >
             {formType}
           </Button>
-          <GoogleButton formType={formType} />
+          <GoogleButton formType={formType} disabled={loadingAuth} />
         </Stack>
 
         <Typography mt={3}>
@@ -135,11 +139,18 @@ const Form = () => {
           <Link
             component="button"
             onClick={toggleIsSignIn}
+            disabled={loadingAuth}
           >
             { `Sign ${isSignUp ? 'in' : 'up'}!`}
           </Link>
         </Typography>
       </Box>
+
+      <Snackbar
+        open={!!errorAuth}
+        message={errorAuth}
+        onClose={() => dispatch(setErrorAuth(null))}
+      />
     </Card>
   );
 };

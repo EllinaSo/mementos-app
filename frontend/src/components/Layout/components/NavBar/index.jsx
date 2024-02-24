@@ -32,7 +32,9 @@ const NavBar = () => {
             {profile ? (
               <>
                 <Stack direction="row" alignItems="center" gap={1}>
-                  <Avatar alt={profile.name} src={profile.picture} />
+                  <Avatar alt={profile.name} src={profile.picture}>
+                    {profile.name.charAt(0)}
+                  </Avatar>
                   <Typography sx={{ fontWeight: 'bold' }}>
                     {profile.name}
                   </Typography>
