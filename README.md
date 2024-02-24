@@ -9,6 +9,8 @@ This project is a simple social media MERN application that allows users to post
 - Liking post
 - Deleting post
 
+The latest changes were suspended (Log in, Sign in forms) and have not been deployed.
+
 ### Technologies
 
 - MongoDB Atlas Database
